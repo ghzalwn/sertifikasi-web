@@ -7,6 +7,10 @@ class Home extends CI_Controller {
 	{	
 		$d['page'] = 'dashboard';
 		$d['title'] = 'Dashboard';
+		$d['jml_tempat_wisata'] = $this->db->count_all_results('tempat_wisata');
+		$d['jml_pesan_tiket'] = $this->db->count_all_results('pesan_tiket');
+		// var_dump($d);
+		// die;
 		$this->load->view('home', $d);
 	}
 
@@ -114,35 +118,42 @@ class Home extends CI_Controller {
 
 	public function submit_pesan_tiket(){
 		$data = $this->input->post();
-		if(isset($data['id']) && !empty($data['id'])){
-			$id = $data['id'];
-			unset($data['id']);
-			$this->db->where('id', $id);
-			$this->db->update('pesan_tiket', $data);
-			if($this->db->affected_rows() >=0){
-				$this->session->set_flashdata('status', 'success');
-				$this->session->set_flashdata('message', 'Saving Data Success');
-				redirect('home/data_pesan_tiket', 'refresh');
+		if($data['total_bayar'] != ''){
+			if(isset($data['id']) && !empty($data['id'])){
+				$id = $data['id'];
+				unset($data['id']);
+				$this->db->where('id', $id);
+				$this->db->update('pesan_tiket', $data);
+				if($this->db->affected_rows() >=0){
+					$this->session->set_flashdata('status', 'success');
+					$this->session->set_flashdata('message', 'Saving Data Success');
+					redirect('home/data_pesan_tiket', 'refresh');
+				}else{
+					$this->session->set_flashdata('status', 'failed');
+					$this->session->set_flashdata('message', 'Saving Data Failed');
+					redirect(current_url());
+				}
+	
 			}else{
-				$this->session->set_flashdata('status', 'failed');
-				$this->session->set_flashdata('message', 'Saving Data Failed');
-				redirect(current_url());
+				$this->db->insert('pesan_tiket',$data);
+				$this->session->set_flashdata('status', 'success');
+					$this->session->set_flashdata('message', 'Saving Data Success');
+				if($this->db->affected_rows() >=0){
+					$this->session->set_flashdata('status', 'success');
+					$this->session->set_flashdata('message', 'Saving Data Success');
+					redirect('home/data_pesan_tiket', 'refresh');
+				}else{
+					$this->session->set_flashdata('status', 'failed');
+					$this->session->set_flashdata('message', 'Saving Data Failed');
+					redirect(current_url());
+				}
 			}
-
 		}else{
-			$this->db->insert('pesan_tiket',$data);
-			$this->session->set_flashdata('status', 'success');
-				$this->session->set_flashdata('message', 'Saving Data Success');
-			if($this->db->affected_rows() >=0){
-				$this->session->set_flashdata('status', 'success');
-				$this->session->set_flashdata('message', 'Saving Data Success');
-				redirect('home/data_pesan_tiket', 'refresh');
-			}else{
-				$this->session->set_flashdata('status', 'failed');
-				$this->session->set_flashdata('message', 'Saving Data Failed');
-				redirect(current_url());
-			}
+			$this->session->set_flashdata('status', 'failed');
+			$this->session->set_flashdata('message', 'Tolong klik hitung total bayar terlebih dahulu');
+			redirect('home/data_pesan_tiket', 'refresh');
 		}
+		
 	}
 
 

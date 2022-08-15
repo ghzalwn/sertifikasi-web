@@ -15,6 +15,7 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Nama Lengkap</label>
+                    <input type="hidden" class="form-control" placeholder="" name="id" value="<?php echo $data['id']?>" required>
                     <input type="text" class="form-control" placeholder="" name="nama_lengkap" value="<?php echo $data['nama_lengkap']?>" required>
                   </div>
                   <div class="form-group">
@@ -33,6 +34,10 @@
                       <option value="<?php echo $d['id']?>" data-price="<?php echo $d['price']?>" selected="<?php echo $data['id_tempat_wisata'] == $d['id'] ? true: false?>" ><?php echo $d['nama_tempat']?></option>
                       <?php } ?>
                     </select>
+                    <button type="button" class="btn btn-sm btn-primary" id="lihat-tempat-wisata" data-url="<?php echo $data['url_tempat_wisata']?>">lihat</button>
+
+                    <input type="hidden" class="form-control" placeholder="" name="url_tempat_wisata" id="url_tempat_wisata" value="<?php echo $data['url_tempat_wisata']?>">
+
                   </div>
                   
                   <div class="form-group">
@@ -58,7 +63,7 @@
 
                   <div class="form-group">
                     <label for="exampleInputEmail1">Total Bayar</label>
-                    <input type="hidden" class="form-control" placeholder="" name="total_bayar" value="" id="total_bayar" value="<?php echo $data['total_bayar']?>">
+                    <input type="hidden" class="form-control" placeholder="" name="total_bayar" id="total_bayar" value="<?php echo $data['total_bayar']?>">
                     <span id="place-data-total-bayar"><?php echo  $data['total_bayar']?></span>
                   </div>
                  
@@ -78,3 +83,26 @@
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+
+
+    <div class="modal fade" id="my-modal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Tempat Wisata</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+            <iframe id="wisata-thumbnail" width="450" height="350" src="<?php echo $data['url_tempat_wisata']?>" frameborder="0" allowfullscreen> </iframe>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->

@@ -19,7 +19,7 @@
                   </div>
                   <div class="form-group">
                     <label for="exampleInputEmail1">Nomor Identitas</label>
-                    <input type="text" class="form-control" placeholder="" name="nomor_identitas" required>
+                    <input type="number" class="form-control" placeholder="" name="nomor_identitas" required>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputEmail1">Nomor HP</label>
@@ -30,9 +30,11 @@
                     <select class="form-control" id="select-tempat-wisata" name="id_tempat_wisata" required>
                       <option value="">Pilih</option>
                       <?php foreach($data_tempat as $d){?>
-                      <option value="<?php echo $d['id']?>" data-price="<?php echo $d['price']?>"><?php echo $d['nama_tempat']?></option>
+                      <option value="<?php echo $d['id']?>" data-price="<?php echo $d['price']?>" data-url="<?php echo $d['url']?>"><?php echo $d['nama_tempat']?></option>
                       <?php } ?>
                     </select>
+                    <button type="button" class="btn btn-sm btn-primary" id="lihat-tempat-wisata" data-url="">lihat</button>
+                    <input type="hidden" class="form-control" placeholder="" name="url_tempat_wisata" id="url_tempat_wisata">
                   </div>
                   
                   <div class="form-group">
@@ -42,12 +44,12 @@
 
                   <div class="form-group">
                     <label for="exampleInputEmail1">Pengunjung Dewasa</label>
-                    <input type="text" class="form-control" placeholder="" id="pengunjung_dewasa" name="pengunjung_dewasa" required>
+                    <input type="number" class="form-control" placeholder="" id="pengunjung_dewasa" name="pengunjung_dewasa" required>
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputEmail1">Pengunjung Anak - Anak</label>
-                    <input type="text" class="form-control" placeholder="" id="pengunjung_anak" name="pengunjung_anak" required>
+                    <input type="number" class="form-control" placeholder="" id="pengunjung_anak" name="pengunjung_anak" required>
                   </div>
 
                   <div class="form-group">
@@ -78,3 +80,27 @@
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+
+
+      <div class="modal fade" id="my-modal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Tempat Wisata</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+            <iframe id="wisata-thumbnail" width="450" height="350" src="#" frameborder="0" allowfullscreen> </iframe>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+
